@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PV-Rechner 2026 / 2027 – Lohnt sich Ihre Solaranlage nach der EEG-Reform?</title>
+<meta name="description" content="Vergleichen Sie die Wirtschaftlichkeit Ihrer Photovoltaik-Anlage nach den Regeln 2026 und nach dem Entwurf der EEG-Novelle 2027.">
+<style>
+:root{--accent:#0b7a53;--ink:#14171f;--muted:#5b6472;--line:#d9dee7;--bg:#f6f7fa;--card:#fff;--draft:#a05a00}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;font-size:17px}
+header{background:var(--accent);color:#fff;padding:14px 16px}
+header .in{max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px}
+header strong{font-size:1.05rem}
+main{max-width:760px;margin:0 auto;padding:16px 16px 48px}
+h1{font-size:1.5rem;line-height:1.2;margin:.5em 0 .3em;text-wrap:balance}
+h2{font-size:1.15rem;margin:1.2em 0 .4em}
+.lead{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+.grid{display:grid;gap:12px}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr}}
+label{font-weight:600;display:block;margin-bottom:4px}
+.hint{font-weight:400;font-size:.85rem;color:var(--muted);display:block}
+input[type=number],select{font:inherit;width:100%;padding:10px;border:2px solid var(--line);border-radius:8px;min-height:46px;background:#fff}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #ffb300;outline-offset:2px}
+.cmp{display:grid;gap:12px}
+@media(min-width:600px){.cmp{grid-template-columns:1fr 1fr}}
+.sc{border:2px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+.sc.draft{border-color:var(--draft);border-style:dashed}
+.sc h3{margin:0 0 6px;font-size:1.05rem}
+.badge{display:inline-block;font-size:.75rem;font-weight:700;background:var(--draft);color:#fff;border-radius:99px;padding:2px 8px}
+.big{font-size:1.9rem;font-weight:700;font-variant-numeric:tabular-nums}
+dl{display:grid;grid-template-columns:1fr auto;gap:4px 12px;margin:8px 0 0}
+dt{color:var(--muted)}dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.btn{font:inherit;font-weight:600;border:2px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:12px 18px;min-height:48px;cursor:pointer}
+details{margin-top:8px}summary{cursor:pointer;font-weight:600}
+ul{padding-left:1.2em}
+footer{max-width:760px;margin:0 auto;padding:16px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line)}
+footer a{color:inherit}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .noprint,.btn,footer nav{display:none!important}
+  .card{border:0;padding:0;margin:8px 0}
+  .cmp{grid-template-columns:1fr 1fr}
+  input,select{border:0;padding:0;min-height:0}
+}
+</style>
+</head>
+<body>
+<header><div class="in"><strong id="brand">PV-Rechner 2026 / 2027</strong><span id="contact"></span></div></header>
+<main>
+  <h1>Was bringt Ihre Solaranlage – heute und nach der EEG-Reform?</h1>
+  <p class="lead">Geben Sie Ihre Werte ein. Der Rechner zeigt dieselbe Anlage nach den Regeln 2026 und nach dem Entwurf für 2027.</p>
+
+  <form class="card" id="f" onsubmit="return false">
+    <h2>Ihre Anlage</h2>
+    <div class="grid">
+      <div><label for="kwp">Anlagengröße (kWp)</label><input type="number" id="kwp" value="10" min="1" max="25" step="0.5" inputmode="decimal"></div>
+      <div><label for="yield">Ertrag je kWp (kWh/Jahr)<span class="hint">Süddeutschland etwa 950 bis 1.050</span></label><input type="number" id="yield" value="950" min="600" max="1300" step="10" inputmode="numeric"></div>
+      <div><label for="cons">Stromverbrauch (kWh/Jahr)</label><input type="number" id="cons" value="4500" min="500" max="30000" step="100" inputmode="numeric"></div>
+      <div><label for="bat">Speicher (kWh)<span class="hint">0 = ohne Speicher</span></label><input type="number" id="bat" value="0" min="0" max="40" step="1" inputmode="decimal"></div>
+      <div><label for="ev">Wallbox: zusätzlicher Verbrauch (kWh/Jahr)<span class="hint">0 = keine Wallbox; 2.000 kWh ≈ 11.000 km</span></label><input type="number" id="ev" value="0" min="0" max="10000" step="100" inputmode="numeric"></div>
+      <div><label for="price">Strompreis (ct/kWh)</label><input type="number" id="price" value="35" min="10" max="80" step="0.5" inputmode="decimal"></div>
+      <div><label for="cost">Anlagenkosten gesamt (€)</label><input type="number" id="cost" value="16000" min="1000" max="100000" step="500" inputmode="numeric"></div>
+    </div>
+
+    <details>
+      <summary>Vergütungsannahmen anpassen</summary>
+      <div class="grid" style="margin-top:10px">
+        <div><label for="t10">Einspeisevergütung 2026 bis 10 kWp (ct/kWh)<span class="hint">Teileinspeisung, Stand August 2026</span></label><input type="number" id="t10" value="7.70" min="0" max="20" step="0.01" inputmode="decimal"></div>
+        <div><label for="t40">Einspeisevergütung 2026 über 10 kWp (ct/kWh)<span class="hint">Anteil über 10 kWp</span></label><input type="number" id="t40" value="6.66" min="0" max="20" step="0.01" inputmode="decimal"></div>
+        <div><label for="tt">Entwurf 2027: Übergangszahlung (ct/kWh)<span class="hint">Höhe im Entwurf noch nicht bekannt. 0 = ungünstigster Fall.</span></label><input type="number" id="tt" value="0" min="0" max="20" step="0.1" inputmode="decimal"></div>
+        <div><label for="ty">Entwurf 2027: Dauer der Übergangszahlung (Jahre)</label><input type="number" id="ty" value="3" min="0" max="20" step="1" inputmode="numeric"></div>
+        <div><label for="tm">Entwurf 2027: Erlös danach (ct/kWh)<span class="hint">z. B. Direktvermarktung. 0 = ungünstigster Fall.</span></label><input type="number" id="tm" value="0" min="0" max="20" step="0.1" inputmode="decimal"></div>
+      </div>
+    </details>
+  </form>
+
+  <section aria-live="polite">
+    <div class="cmp">
+      <div class="sc"><h3>Regeln 2026</h3><p>Inbetriebnahme bis 31.12.2026</p>
+        <div class="big" id="pb26">–</div><div>Jahre bis zur Amortisation</div>
+        <dl><dt>Ersparnis Eigenverbrauch/Jahr</dt><dd id="sv26"></dd><dt>Einspeiseerlös/Jahr</dt><dd id="fd26"></dd><dt>Überschuss nach 20 Jahren</dt><dd id="nt26"></dd></dl></div>
+      <div class="sc draft"><h3>Entwurf 2027 <span class="badge">Entwurf, noch nicht in Kraft</span></h3><p>Inbetriebnahme ab 2027</p>
+        <div class="big" id="pb27">–</div><div>Jahre bis zur Amortisation</div>
+        <dl><dt>Ersparnis Eigenverbrauch/Jahr</dt><dd id="sv27"></dd><dt>Einspeiseerlös/Jahr <span id="fy27"></span></dt><dd id="fd27"></dd><dt>Überschuss nach 20 Jahren</dt><dd id="nt27"></dd></dl></div>
+    </div>
+    <div class="card">
+      <dl><dt>Jahresertrag</dt><dd id="oY"></dd><dt>Eigenverbrauch</dt><dd id="oS"></dd><dt>Autarkiegrad</dt><dd id="oA"></dd><dt>Netzeinspeisung</dt><dd id="oF"></dd></dl>
+      <p id="msg" style="margin-top:12px;font-weight:600"></p>
+    </div>
+    <p class="noprint"><button class="btn" type="button" id="print">Als Kundenblatt drucken</button></p>
+  </section>
+
+  <div class="card">
+    <h2>So rechnet das Modell</h2>
+    <ul>
+      <li>Vereinfachte Näherung für Eigenverbrauch und Autarkie, keine Simulation Ihres Lastprofils.</li>
+      <li>Keine Strompreissteigerung, keine Moduldegradation, keine Betriebs- und Finanzierungskosten.</li>
+      <li>Regeln 2026: feste Vergütung über 20 Jahre mit den oben eingetragenen Sätzen.</li>
+      <li>Entwurf 2027: Kabinettsbeschluss vom 29. Juli 2026. Für neue Anlagen unter 25 kW soll die feste Vergütung entfallen; vorgesehen ist eine befristete Übergangszahlung. Bundestag und Bundesrat können den Entwurf noch ändern.</li>
+      <li>Die Ergebnisse sind eine Orientierung und kein Angebot.</li>
+    </ul>
+  </div>
+</main>
+<footer>
+  <p>Hinweis: Dieser Rechner ist eine Arbeitshilfe und ersetzt keine Energie-, Steuer- oder Rechtsberatung. Stand: <span id="stand"></span>. Ihre Eingaben bleiben in Ihrem Browser und werden nicht übertragen oder gespeichert.</p>
+  <nav><a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></nav>
+</footer>
+
+<script id="logic">
+/* ===== MODEL – pure functions, no DOM. Parameters marked draft follow the government draft of the EEG reform
+   (cabinet decision 29 July 2026) and must be updated once the law is passed. ===== */
+var STAND="16.11.2026";
+
+function energy(kwp,yieldPerKwp,consumption,batteryKwh){
+  var Y=kwp*yieldPerKwp,C=consumption;
+  if(Y<=0||C<=0) return {Y:Math.max(Y,0),self:0,feed:Math.max(Y,0),autarky:0};
+  var r=Y/C,b=batteryKwh/(C/1000);
+  var aDirect=0.45*(1-Math.exp(-1.1*r));
+  var aBattery=0.35*(1-Math.exp(-1.3*b))*Math.min(1,r);
+  var a=Math.min(0.95,aDirect+aBattery);
+  var self=Math.min(a*C,Y);
+  return {Y:Y,self:self,feed:Y-self,autarky:self/C};
+}
+function tariff2026(kwp,t10,t40){
+  if(kwp<=10) return t10;
+  return (10*t10+(kwp-10)*t40)/kwp;
+}
+/* rates in ct/kWh; returns yearly cash flows for 20 years */
+function economics(e,priceCt,cost,feedRates){
+  var save=e.self*priceCt/100,cum=-cost,payback=null,years=[];
+  for(var y=1;y<=20;y++){
+    var inc=save+e.feed*feedRates[y-1]/100,before=cum;
+    cum+=inc;years.push(inc);
+    if(payback===null&&cum>=0&&inc>0) payback=(y-1)+(-before/inc);
+  }
+  return {save:save,feedYear1:e.feed*feedRates[0]/100,net20:cum,payback:payback};
+}
+function rates2026(kwp,t10,t40){var t=tariff2026(kwp,t10,t40),a=[];for(var i=0;i<20;i++)a.push(t);return a}
+function rates2027(transCt,transYears,afterCt){var a=[];for(var i=0;i<20;i++)a.push(i<transYears?transCt:afterCt);return a}
+if(typeof module!=="undefined") module.exports={energy:energy,tariff2026:tariff2026,economics:economics,rates2026:rates2026,rates2027:rates2027};
+</script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  $("stand").textContent=STAND;
+
+  /* white label: ?name=…&farbe=1f5eff&kontakt=… (values are set as text only) */
+  var q=new URLSearchParams(location.search);
+  var nm=(q.get("name")||"").slice(0,60),fb=(q.get("farbe")||"").replace(/^#/,""),kt=(q.get("kontakt")||"").slice(0,80);
+  if(nm){$("brand").textContent=nm+" · PV-Rechner";document.title=nm+" · PV-Rechner 2026 / 2027"}
+  if(/^[0-9a-fA-F]{6}$/.test(fb)) document.documentElement.style.setProperty("--accent","#"+fb);
+  if(kt) $("contact").textContent=kt;
+
+  var eur=new Intl.NumberFormat("de-DE",{style:"currency",currency:"EUR",maximumFractionDigits:0});
+  var num=new Intl.NumberFormat("de-DE",{maximumFractionDigits:0});
+  function v(id){var x=parseFloat(String($(id).value).replace(",","."));return isFinite(x)&&x>=0?x:0}
+  function pb(x){return x===null?"über 20":x.toLocaleString("de-DE",{minimumFractionDigits:1,maximumFractionDigits:1})}
+
+  function calc(){
+    var kwp=v("kwp"),e=energy(kwp,v("yield"),v("cons")+v("ev"),v("bat"));
+    var a=economics(e,v("price"),v("cost"),rates2026(kwp,v("t10"),v("t40")));
+    var ty=Math.round(v("ty")),b=economics(e,v("price"),v("cost"),rates2027(v("tt"),ty,v("tm")));
+    $("pb26").textContent=pb(a.payback);$("pb27").textContent=pb(b.payback);
+    $("sv26").textContent=eur.format(a.save);$("sv27").textContent=eur.format(b.save);
+    $("fd26").textContent=eur.format(a.feedYear1);$("fd27").textContent=eur.format(b.feedYear1);
+    $("fy27").textContent=ty>0?"(Jahr 1 bis "+ty+")":"";
+    $("nt26").textContent=eur.format(a.net20);$("nt27").textContent=eur.format(b.net20);
+    $("oY").textContent=num.format(e.Y)+" kWh";$("oS").textContent=num.format(e.self)+" kWh";
+    $("oA").textContent=Math.round(e.autarky*100)+" %";$("oF").textContent=num.format(e.feed)+" kWh";
+    var diff=a.net20-b.net20;
+    $("msg").textContent=diff>0?("Unterschied über 20 Jahre mit Ihren Annahmen: "+eur.format(diff)+" zugunsten der Regeln 2026."):"Mit Ihren Annahmen ergibt sich kein Nachteil durch den Entwurf 2027.";
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("#f input"),function(i){i.addEventListener("input",calc)});
+  $("print").addEventListener("click",function(){window.print()});
+  calc();
+})();
+</script>
+</body>
+</html>
